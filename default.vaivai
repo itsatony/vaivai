@@ -1,0 +1,50 @@
+# Default .vaivai configuration file
+
+project_name: "" # Leave empty to auto-detect from git or root directory name
+
+file_list:
+  output_file: "filelist.md"
+  base_dir: "."
+  includes:
+    - "*.go"
+    - "*.py"
+    - "*.js"
+    - "*.ts"
+    - "*.html"
+    - "*.css"
+    - "*.md"
+  excludes:
+    - ".git/**"
+    - "node_modules/**"
+    - "vendor/**"
+
+content_overview:
+  output_file: "content_overview.md"
+  base_dir: "."
+  includes:
+    - "*.go"
+    - "*.py"
+    - "*.js"
+    - "*.ts"
+    - "*.html"
+    - "*.css"
+    - "*.md"
+  excludes:
+    - ".git/**"
+    - "node_modules/**"
+    - "vendor/**"
+
+file_type_mapping:
+  ".go": "go"
+  ".py": "python"
+  ".js": "javascript"
+  ".ts": "typescript"
+  ".html": "html"
+  ".css": "css"
+  ".md": "markdown"
+
+settings:
+  overwrite_existing_files: true
+
+error_logging:
+  log_file: ".vaivai_errors.log"
