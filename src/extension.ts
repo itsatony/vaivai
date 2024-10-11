@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
 import { generateFileList } from './fileListGenerator';
 import { generateContentOverview } from './contentOverviewGenerator';
-import { VaivaiConfig, loadConfig, getProjectName } from './config';
+import { loadConfig, getProjectName } from './config';
 import { initializeErrorLogger, appendToErrorLog, getErrorLog, clearErrorLog } from './errorLogger';
+import * as path from 'path';
+import * as fs from 'fs';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('Vaivai extension is now active');
@@ -52,16 +52,16 @@ export function activate(context: vscode.ExtensionContext) {
             });
             await vscode.window.showTextDocument(doc);
         } catch (error) {
-            vscode.window.showErrorMessage(`Failed to view error log: ${error.message}`);
+            vscode.window.showErrorMessage(`Failed to view error log: ${(error as Error).message}`);
         }
     });
-
+    
     let disposable4 = vscode.commands.registerCommand('vaivai.clearErrorLog', async () => {
         try {
             await clearErrorLog();
             vscode.window.showInformationMessage('Error log cleared successfully.');
         } catch (error) {
-            vscode.window.showErrorMessage(`Failed to clear error log: ${error.message}`);
+            vscode.window.showErrorMessage(`Failed to clear error log: ${(error as Error).message}`);
         }
     });
 

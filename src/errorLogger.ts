@@ -26,7 +26,7 @@ export async function appendToErrorLog(errorMessage: string): Promise<void> {
     try {
         await fs.promises.appendFile(errorLogPath, logEntry, 'utf8');
     } catch (error) {
-        vscode.window.showErrorMessage(`Failed to write to error log: ${error.message}`);
+        vscode.window.showErrorMessage(`Failed to write to error log: ${(error as Error).message}`);
     }
 }
 
@@ -38,7 +38,7 @@ export async function getErrorLog(): Promise<string> {
     try {
         return await fs.promises.readFile(errorLogPath, 'utf8');
     } catch (error) {
-        if (error.code === 'ENOENT') {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
             return 'No errors logged yet.';
         }
         throw error;
@@ -53,6 +53,6 @@ export async function clearErrorLog(): Promise<void> {
     try {
         await fs.promises.writeFile(errorLogPath, '', 'utf8');
     } catch (error) {
-        throw new Error(`Failed to clear error log: ${error.message}`);
+        throw new Error(`Failed to clear error log: ${(error as Error).message}`);
     }
 }

@@ -70,6 +70,28 @@ error_logging:
 - To view the error log: Run the "Vaivai: View Error Log" command from the command palette.
 - To clear the error log: Run the "Vaivai: Clear Error Log" command from the command palette.
 
+## Building the Extension
+
+To compile and package the extension, we provide a build script. Follow these steps:
+
+1. Ensure you have Node.js and npm installed on your system.
+2. Navigate to the root directory of the project in your terminal.
+3. Make the build script executable:
+
+   ```terminal
+   chmod +x build.sh
+   ```
+
+4. Run the build script:
+
+   ```terminal
+   ./build.sh
+   ```
+
+The script will install dependencies, compile the TypeScript code, run tests, and package the extension into a .vsix file. If successful, you'll find the .vsix file in the project root directory.
+
+...
+
 ## Troubleshooting
 
 If you encounter any issues, check the error log by running the "Vaivai: View Error Log" command. If the problem persists, please report the issue on the project's GitHub page.

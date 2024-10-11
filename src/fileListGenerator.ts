@@ -1,8 +1,11 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as glob from 'glob';
+import { glob } from 'glob';
+import { promisify } from 'util';
 import { VaivaiConfig } from './config';
+
+const globPromise = promisify(glob);
 
 export async function generateFileList(config: VaivaiConfig, projectName: string): Promise<void> {
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
@@ -22,23 +25,13 @@ export async function generateFileList(config: VaivaiConfig, projectName: string
 
 async function getFilteredFiles(baseDir: string, includes: string[], excludes: string[]): Promise<string[]> {
     const allFiles = await Promise.all(includes.map(pattern => 
-        new Promise<string[]>((resolve, reject) => {
-            glob(pattern, { cwd: baseDir, nodir: true }, (err, matches) => {
-                if (err) reject(err);
-                else resolve(matches);
-            });
-        })
+        globPromise(pattern, { cwd: baseDir, nodir: true })
     ));
 
     const flattenedFiles = allFiles.flat();
 
     const excludedFiles = await Promise.all(excludes.map(pattern =>
-        new Promise<string[]>((resolve, reject) => {
-            glob(pattern, { cwd: baseDir, nodir: true }, (err, matches) => {
-                if (err) reject(err);
-                else resolve(matches);
-            });
-        })
+        globPromise(pattern, { cwd: baseDir, nodir: true })
     ));
 
     const flattenedExcludes = new Set(excludedFiles.flat());

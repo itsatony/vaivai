@@ -43,7 +43,7 @@ export async function loadConfig(): Promise<VaivaiConfig | null> {
         const configContent = await fs.promises.readFile(configPath, 'utf8');
         return yaml.load(configContent) as VaivaiConfig;
     } catch (error) {
-        vscode.window.showErrorMessage(`Failed to load .vaivai configuration: ${error.message}`);
+        vscode.window.showErrorMessage(`Failed to load .vaivai configuration: ${(error as Error).message}`);
         return null;
     }
 }
